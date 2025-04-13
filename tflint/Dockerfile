@@ -8,13 +8,13 @@ RUN set -eux \
         ARCH=arm64; \
     fi \
     \
-    && wget --quiet https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${ARCH}.zip \
-    && unzip tflint_linux_${ARCH}.zip \
+    && wget --quiet "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_${ARCH}.zip" \
+    && unzip "tflint_linux_${ARCH}.zip" \
     && mv tflint /usr/bin/tflint \
     && chmod +x /usr/bin/tflint
 
 FROM alpine:3.18.2
 LABEL maintainer='Anton Melekhin'
 
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk add --no-cache ca-certificates
 COPY --from=build /usr/bin/tflint /usr/bin/tflint
